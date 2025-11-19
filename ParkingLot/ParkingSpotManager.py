@@ -1,79 +1,45 @@
+from ParkingSpot import ParkingSpot
 from abc import ABC, abstractmethod
-from Vehicle import VehicleType
-from ParkingSpot import TwoWheelerParkingSpot, ThreeWheelerParkingSpot
-from typing import List
+
 
 
 class ParkingSpotManager(ABC):
+    def __init__(self):
+        self.parking_spots = {}
 
-    @abstractmethod
-    def find_parking_space(self):
-        pass
+    def find_parking_space(self, vehicle):
+        for spot in self.parking_spots.values():
+            if not spot.is_occupied:
+                return spot
+        return None
 
-    @abstractmethod
-    def add_parking_space(self):
-        pass
+    def add_parking_spot(self, parking_spot):
+        self.parking_spots[parking_spot.spot_id] = parking_spot
 
-    @abstractmethod
-    def remove_parking_space(self):
-        pass
-
-    @abstractmethod
-    def park_vehicle(self):
-        pass
-
-    @abstractmethod
-    def remove_vehicle(self):
-        pass
+    # def parkVehicle(self):
+    #     pass
+    #
+    # def unparkVehicle(self):
+    #     pass
 
 
 class TwoWheelerParkingSpotManager(ParkingSpotManager):
     def __init__(self):
-        self.list_of_two_wheeler_parking_spot = List[TwoWheelerParkingSpot]
+        super().__init__()
 
-    def find_parking_space(self):
-        pass
-
-    def add_parking_space(self):
-        pass
-
-    def remove_parking_space(self):
-        pass
-
-    def park_vehicle(self):
-        pass
-
-    def remove_vehicle(self):
-        pass
-
-
-class ThreeWheelerParkingSpotManager(ParkingSpotManager):
+class FourWheelerParkingSpotManager(ParkingSpotManager):
     def __init__(self):
-        self.list_of_three_wheeler_parking_spot = List[ThreeWheelerParkingSpot]
-
-    def find_parking_space(self):
-        pass
-
-    def add_parking_space(self):
-        pass
-
-    def remove_parking_space(self):
-        pass
-
-    def park_vehicle(self):
-        pass
-
-    def remove_vehicle(self):
-        pass
+        super().__init__()
 
 
 class ParkingSpotManagerFactory:
-    def allot_parking_spot(self, vehicle_type):
-        if vehicle_type == VehicleType.TwoWheeler:
+
+    def getParkingManager(self, parkingType):
+        if parkingType.lower() == "twowheeler":
             return TwoWheelerParkingSpotManager()
 
-        if vehicle_type == VehicleType.FourWheeler:
-            return ThreeWheelerParkingSpotManager()
+        elif parkingType.lower() == "fourwheeler":
+            return FourWheelerParkingSpotManager()
 
         else:
-            return "invalid vehicle type"
+            return "invalid parking type"
