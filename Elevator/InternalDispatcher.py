@@ -1,0 +1,2 @@
+class InternalDispatcher:
+    pass
