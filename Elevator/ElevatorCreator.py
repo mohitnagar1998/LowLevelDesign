@@ -1,8 +1,6 @@
 from ElevatorController import ElevatorController
 from ElevatorCar import ElevatorCar
-
-# create a shared list of elevator controllers
-elevator_controller_list = []
+from ElevatorRegistry import elevator_controller_list
 
 
 def _init_elevators():
